@@ -1,0 +1,10 @@
+import type { Product } from "../../data/products";
+import { CategoryNav } from "./CategoryNav";
+import { LocationBanner } from "./LocationBanner";
+import { ProductGrid } from "./ProductGrid";
+
+type MarketplaceCatalogProps = { products: Product[]; categories: string[]; activeCategory: string; query: string; deliveryOnly: boolean; sortOption: string; saved: number[]; onCategoryChange: (category: string) => void; onDeliveryChange: () => void; onSortChange: () => void; onToggleSaved: (id: number) => void; onAddToBag: (product: Product) => void; onClear: () => void; onSetLocation: () => void };
+
+export function MarketplaceCatalog({ products, categories, activeCategory, query, deliveryOnly, sortOption, saved, onCategoryChange, onDeliveryChange, onSortChange, onToggleSaved, onAddToBag, onClear, onSetLocation }: MarketplaceCatalogProps) {
+	return <><section className="discover-section" id="discover"><div className="section-heading"><div><p className="section-kicker">Explore the marketplace</p><h2>What are you looking for?</h2></div><a className="text-button" href="#shops">View all products <span>↗</span></a></div><CategoryNav categories={categories} activeCategory={activeCategory} onCategoryChange={onCategoryChange} /></section><section className="results-section" id="shops"><div className="results-toolbar"><div><p className="section-kicker">Curated for you</p><h2>{query ? `Results for “${query}”` : "Popular near you"}</h2><span className="result-count">{products.length} products from local sellers</span></div><div className="toolbar-actions"><button className={`filter-button ${deliveryOnly ? "filter-active" : ""}`} onClick={onDeliveryChange}><span className="filter-icon">≡</span> Delivery available <span className="toggle-dot">{deliveryOnly ? "✓" : ""}</span></button><button className="sort-button" onClick={onSortChange}>Sort: <strong>{sortOption}</strong> <span>⌄</span></button></div></div><ProductGrid products={products} saved={saved} onToggleSaved={onToggleSaved} onAddToBag={onAddToBag} onClear={onClear} /><LocationBanner onSetLocation={onSetLocation} /></section></>;
+}
